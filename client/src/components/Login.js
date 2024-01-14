@@ -1,4 +1,3 @@
-import { Box, Button, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
 import axios from "axios";
 
@@ -42,14 +41,12 @@ const Login = () => {
       sendRequest("signup").then((data) => {
         localStorage.setItem("userId", data.user._id);
         window.location.href = "/";
-        // naviagte("/");
       });
     } else {
       console.log("login");
       sendRequest("login").then((data) => {
         localStorage.setItem("userId", data.user._id);
         window.location.href = "/";
-        // naviagte("/");
       });
     }
   };
