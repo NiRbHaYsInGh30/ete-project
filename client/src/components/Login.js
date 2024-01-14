@@ -8,14 +8,14 @@ const Login = () => {
     setIsLogin(!isLogin);
   };
 
-  const [signupInputs, setSignupInputs] = useState({
+  const [inputs, setInputs] = useState({
     name: "",
     email: "",
     password: "",
   });
 
   const handleChange = (e) => {
-    setSignupInputs((prevState) => ({
+    setInputs((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
     }));
@@ -24,13 +24,14 @@ const Login = () => {
   const sendRequest = async (type) => {
     const res = await axios
       .post(`http://localhost:5000/api/users/${type}`, {
-        name: signupInputs.name,
-        email: signupInputs.email,
-        password: signupInputs.password,
+        name: inputs.name,
+        email: inputs.email,
+        password: inputs.password,
       })
       .catch((err) => console.log(err));
 
-    const data = await res.data;
+    const result = await res;
+    const data = result.data;
     return data;
   };
 
@@ -52,7 +53,7 @@ const Login = () => {
   };
 
   return (
-    <div className="mx-[30rem] border rounded-md mt-3">
+    <div className="mx-[30rem] border rounded-md mt-3 flex flex-col items-center justify-center">
       <form onSubmit={handleSubmit}>
         <div className="rounded-md p-4 mt-3 flex flex-col justify-center items-center w-full">
           <h2 className="text-center text-2xl font-semibold">
@@ -63,7 +64,7 @@ const Login = () => {
               type="text"
               name="name"
               onChange={handleChange}
-              value={signupInputs.name}
+              value={inputs.name}
               placeholder="Name"
               className="p-2 border rounded-md mt-2 outline-none min-w-72"
             />
@@ -72,7 +73,7 @@ const Login = () => {
             type="email"
             name="email"
             onChange={handleChange}
-            value={signupInputs.email}
+            value={inputs.email}
             placeholder="Email"
             className="p-2 border rounded-md mt-2 outline-none min-w-72"
           />
@@ -80,7 +81,7 @@ const Login = () => {
             name="password"
             className="p-2 border rounded-md mt-2 outline-none min-w-72"
             onChange={handleChange}
-            value={signupInputs.password}
+            value={inputs.password}
             type={"password"}
             placeholder="Password"
           />
@@ -90,14 +91,14 @@ const Login = () => {
           >
             Submit
           </button>
-          <button
-            onClick={loginSignupToggle}
-            className="px-4 py-2 rounded-md border mt-4"
-          >
-            Change To {!isLogin ? "Login" : "Signup"}
-          </button>
         </div>
       </form>
+      <button
+        onClick={loginSignupToggle}
+        className="px-4 py-2 rounded-md border mt-4 justify-self-center max-w-48 my-4"
+      >
+        Change To {!isLogin ? "Login" : "Signup"}
+      </button>
     </div>
   );
 };
