@@ -30,7 +30,8 @@ const signUp = async (req, res, next) => {
   if (existingUser) {
     return res.status(400).json({ message: "User is already exists!" });
   }
-  const hashedPassword = bcrypt.hashSync(password);
+
+  const hashedPassword = await bcrypt.hashSync(password);
   const user = new User({
     name,
     email,
@@ -60,7 +61,10 @@ const logIn = async (req, res, next) => {
     return res.status(404).json({ message: "User is not found" });
   }
 
-  const isPasswordCorrect = bcrypt.compareSync(password, existingUser.password);
+  const isPasswordCorrect = await bcrypt.compareSync(
+    password,
+    existingUser.password
+  );
 
   if (!isPasswordCorrect) {
     return res.status(400).json({ message: "Incorrect Password!" });

@@ -8,46 +8,13 @@
 - **Blog Updates:** Seamlessly edit and update your blogs to reflect evolving content.
 - **Discover Other Users' Blogs:** Explore and read blogs published by fellow users for a diverse and engaging experience.
 
-## TODOs
+## Project Showcase
 
-```js
-/**
- * ** CODE THIS!!! **
- * 
- * ## File - Header.js ##
- * 
- * Code a header with following things
- * 
- * Signup/Login ( goto => /login )
- * 
- * fields for login ( email, password )
- * fields for signup ( name, email, password )
- * 
- * login and store userId to localStorage then access it to perform other operations
- * 
- * when userId is available replace login/signup button with Logout and delete userId stored in localStorage on logout
- * 
- * ************************
- * 
- * ** THINGS ALREADY CODED **
- * 
- * Show all blogs ( /blogs )
- * Add a blog ( /blogs/add )
- * My Blogs ( /myBlogs )
- * My Blogs by ID ( /myBlogs/:id )
- * Delete a Blog ( goto => /myBlogs & hit the Delete button )
- * 
- * ** Things you _can_ improve
- * 
- * Add tailwind in this and make the structure of blogs look better
- * Use a black and white color scheme
- * 
- */
-```
-
-> NOTE: Backend will require your mongo URI create a `.env` file in `server` directory and add `MONGO_URI="<your-mongo-uri-here>"`
+Check screenshots of project: **[Project Showcase]("extras/showcase.md)**
 
 ## Getting Started
+
+> NOTE: Backend will require your mongo URI create a `.env` file in `server` directory and add `MONGO_URI="<your-mongo-uri-here>"`
 
 To initiate this project, follow these steps:
 

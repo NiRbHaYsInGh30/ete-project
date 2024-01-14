@@ -1,25 +1,14 @@
-import {
-  Avatar,
-  Box,
-  Card,
-  CardContent,
-  CardHeader,
-  CardMedia,
-  IconButton,
-  Typography,
-} from "@mui/material";
 import React from "react";
-import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useStyles } from "./utils";
-const Blogs = ({ title, desc, img, user, isUser, id }) => {
-  const classes = useStyles();
+
+const Blog = ({ title, description, imageURL, userName, isUser, id, date }) => {
   const navigate = useNavigate();
+
   const handleEdit = () => {
     navigate(`/myBlogs/${id}`);
   };
+
   const deleteRequest = async () => {
     const res = await axios
       .delete(`http://localhost:5000/api/blogs/${id}`)
@@ -27,64 +16,54 @@ const Blogs = ({ title, desc, img, user, isUser, id }) => {
     const data = await res.data;
     return data;
   };
-  const handleDelete = () => {
-    deleteRequest()
-      .then(() => navigate("/"))
-      .then(() => navigate("/blogs"));
-  };
-  return (
-    <div>
-      {" "}
-      <Card
-        sx={{
-          width: "40%",
-          margin: "auto",
-          mt: 2,
-          padding: 2,
-          boxShadow: "5px 5px 10px #ccc",
-          ":hover": {
-            boxShadow: "10px 10px 20px #ccc",
-          },
-        }}
-      >
-        {isUser && (
-          <Box display="flex">
-            <IconButton onClick={handleEdit} sx={{ marginLeft: "auto" }}>
-              <ModeEditOutlineIcon color="warning" />
-            </IconButton>
-            <IconButton onClick={handleDelete}>
-              <DeleteForeverIcon color="error" />
-            </IconButton>
-          </Box>
-        )}
-        <CardHeader
-          avatar={
-            <Avatar
-              className={classes.font}
-              sx={{ bgcolor: "red" }}
-              aria-label="recipe"
-            >
-              {user ? user.charAt(0) : ""}
-            </Avatar>
-          }
-          title={title}
-        />
-        <CardMedia component="img" height="194" image={img} alt="Paella dish" />
 
-        <CardContent>
-          <hr />
-          <br />
-          <Typography
-            className={classes.font}
-            variant="body2"
-            color="text.secondary"
-          >
-            <b>{user}</b> {": "} {desc}
-          </Typography>
-        </CardContent>
-      </Card>
+  const handleDelete = () => {
+    deleteRequest().then(() => navigate("/"));
+  };
+
+  return (
+    <div className="mx-80 my-4">
+      <div className="border rounded-md">
+        <div className="ml-6 my-2 flex items-center">
+          <p className="text-2xl font-medium">{title}</p>
+          {isUser && (
+            <div className="flex items-center justify-center ml-auto mr-4 gap-2">
+              <button
+                className="font-medium px-2 py-1 rounded-md bg-green-600 text-white"
+                onClick={handleEdit}
+              >
+                Edit
+              </button>
+              <button
+                className="font-medium px-2 py-1 rounded-md bg-red-600 text-white"
+                onClick={handleDelete}
+              >
+                Delete Forever
+              </button>
+            </div>
+          )}
+        </div>
+
+        <div className="flex justify-center">
+          <img
+            className="object-cover w-full h-80"
+            src={imageURL}
+            alt="Blog Banner"
+          />
+        </div>
+
+        <div className="px-4 py-2">
+          <span className="text-md">
+            <div className="flex items-center justify-between">
+              <p className="font-semibold">Post by {userName}</p>
+              {date && <p className="font-semibold">Posted on {date}</p>}
+            </div>
+            <p>{description}</p>
+          </span>
+        </div>
+      </div>
     </div>
   );
 };
 
-export default Blogs;
+export default Blog;

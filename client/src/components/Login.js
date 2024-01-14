@@ -1,11 +1,8 @@
 import { Box, Button, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const naviagte = useNavigate();
-
   const [isLogin, setIsLogin] = useState(true);
 
   const loginSignupToggle = () => {
@@ -18,7 +15,6 @@ const Login = () => {
     password: "",
   });
 
-  // const [isSignup, setIsSignup] = useState(false);
   const handleChange = (e) => {
     setSignupInputs((prevState) => ({
       ...prevState,
@@ -36,84 +32,74 @@ const Login = () => {
       .catch((err) => console.log(err));
 
     const data = await res.data;
-    console.log("request data: ", data);
     return data;
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(signupInputs);
     if (!isLogin) {
       console.log("signup");
-      sendRequest("signup")
-        .then((data) => localStorage.setItem("userId", data.user._id))
-        .then(() => naviagte("/blogs"));
+      sendRequest("signup").then((data) => {
+        localStorage.setItem("userId", data.user._id);
+        window.location.href = "/";
+        // naviagte("/");
+      });
     } else {
       console.log("login");
-      sendRequest("login")
-        .then((data) => localStorage.setItem("userId", data.user._id))
-        .then(() => naviagte("/blogs"));
+      sendRequest("login").then((data) => {
+        localStorage.setItem("userId", data.user._id);
+        window.location.href = "/";
+        // naviagte("/");
+      });
     }
   };
 
   return (
-    <div>
+    <div className="mx-[30rem] border rounded-md mt-3">
       <form onSubmit={handleSubmit}>
-        <Box
-          maxWidth={400}
-          display="flex"
-          flexDirection={"column"}
-          alignItems="center"
-          justifyContent={"center"}
-          boxShadow="10px 10px 20px #ccc"
-          padding={3}
-          margin="auto"
-          marginTop={5}
-          borderRadius={5}
-        >
-          <Typography variant="h2" padding={3} textAlign="center">
+        <div className="rounded-md p-4 mt-3 flex flex-col justify-center items-center w-full">
+          <h2 className="text-center text-2xl font-semibold">
             {!isLogin ? "Signup" : "Login"}
-          </Typography>
+          </h2>
           {!isLogin && (
-            <TextField
+            <input
+              type="text"
               name="name"
               onChange={handleChange}
               value={signupInputs.name}
               placeholder="Name"
-              margin="normal"
+              className="p-2 border rounded-md mt-2 outline-none min-w-72"
             />
-          )}{" "}
-          <TextField
+          )}
+          <input
+            type="email"
             name="email"
             onChange={handleChange}
             value={signupInputs.email}
-            type={"email"}
             placeholder="Email"
-            margin="normal"
+            className="p-2 border rounded-md mt-2 outline-none min-w-72"
           />
-          <TextField
+          <input
             name="password"
+            className="p-2 border rounded-md mt-2 outline-none min-w-72"
             onChange={handleChange}
             value={signupInputs.password}
             type={"password"}
             placeholder="Password"
-            margin="normal"
           />
-          <Button
+          <button
             type="submit"
-            variant="contained"
-            sx={{ borderRadius: 3, marginTop: 3 }}
-            color="warning"
+            className="px-4 py-2 rounded-md bg-blue-600 text-white font-medium mt-4"
           >
             Submit
-          </Button>
-          <Button
+          </button>
+          <button
             onClick={loginSignupToggle}
-            sx={{ borderRadius: 3, marginTop: 3 }}
+            className="px-4 py-2 rounded-md border mt-4"
           >
             Change To {!isLogin ? "Login" : "Signup"}
-          </Button>
-        </Box>
+          </button>
+        </div>
       </form>
     </div>
   );

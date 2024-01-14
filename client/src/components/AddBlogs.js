@@ -1,26 +1,22 @@
-import { Box, Button, InputLabel, TextField, Typography } from "@mui/material";
 import axios from "axios";
-import TextareaAutosize from '@mui/material/TextareaAutosize';
-
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useStyles } from "./utils";
 
-const labelStyles = { mb: 1, mt: 2, fontSize: "24px", fontWeight: "bold" };
 const AddBlogs = () => {
-  const classes = useStyles();
   const navigate = useNavigate();
   const [inputs, setInputs] = useState({
     title: "",
     description: "",
     imageURL: "",
   });
+
   const handleChange = (e) => {
     setInputs((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
     }));
   };
+
   const sendRequest = async () => {
     const res = await axios
       .post("http://localhost:5000/api/blogs/add", {
@@ -33,79 +29,58 @@ const AddBlogs = () => {
     const data = await res.data;
     return data;
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(inputs);
     sendRequest()
       .then((data) => console.log(data))
       .then(() => navigate("/blogs"));
   };
   return (
-    <div>
+    <div className="mx-80 border rounded-md mt-3">
       <form onSubmit={handleSubmit}>
-        <Box
-          borderRadius={10}
-          boxShadow="10px 10px 20px #ccc"
-          padding={3}
-          margin={"auto"}
-          marginTop={3}
-          display="flex"
-          flexDirection={"column"}
-          width={"80%"}
-        >
-          <Typography
-            className={classes.font}
-          
-            padding={3}
-            color="grey"
-            variant="h2"
-            textAlign={"center"}
-          >
-            Post Your Blog
-          </Typography>
-          <InputLabel className={classes.font} sx={labelStyles}>
-            Title
-          </InputLabel>
-          <TextField
-            className={classes.font}
-            name="title"
-            onChange={handleChange}
-            value={inputs.title}
-            margin="auto"
-            variant="outlined"
-          />
-          <InputLabel className={classes.font} sx={labelStyles}>
-            Description
-          </InputLabel>
-          <TextareaAutosize
-            className={classes.font}
-            name="description"
-            onChange={handleChange}
-            minRows={10}
-            margin="auto"
-            variant="outlined"
-            value={inputs.description}
-          />
-          <InputLabel className={classes.font} sx={labelStyles}>
-            ImageURL
-          </InputLabel>
-          <TextField
-            className={classes.font}
-            name="imageURL"
-            onChange={handleChange}
-            value={inputs.imageURL}
-            margin="auto"
-            variant="outlined"
-          />
-          <Button
-            sx={{ mt: 2, borderRadius: 4 }}
-            variant="contained"
-            
+        <div className="rounded-md p-4 mt-3 flex flex-col justify-center items-center w-full">
+          <h3 className="text-3xl text-center font-semibold">Post Your Blog</h3>
+          <div className="w-[60%]">
+            <h3 className="text-xl font-semibold mt-2">Title</h3>
+            <input
+              type="text"
+              placeholder="Enter title of your blog"
+              className="border w-full rounded-md p-2 outline-none"
+              name="title"
+              onChange={handleChange}
+              value={inputs.title}
+            />
+          </div>
+          <div className="w-[60%]">
+            <h3 className="text-xl font-semibold mt-2">Description</h3>
+            <textarea
+              placeholder="Description for blog post"
+              className="border w-full rounded-md p-2 outline-none"
+              name="description"
+              onChange={handleChange}
+              rows={4}
+              value={inputs.description}
+            />
+          </div>
+          <div className="w-[60%]">
+            <h3 className="text-xl font-semibold mt-2">Image URL</h3>
+            <input
+              type="text"
+              placeholder="Enter image URL for your blog post banner"
+              className="border w-full rounded-md p-2 outline-none"
+              name="imageURL"
+              onChange={handleChange}
+              value={inputs.imageURL}
+            />
+          </div>
+          <button
+            className="px-2 py-1 rounded-md font-medium bg-blue-600 text-white mt-2"
             type="submit"
           >
             Submit
-          </Button>
-        </Box>
+          </button>
+        </div>
       </form>
     </div>
   );

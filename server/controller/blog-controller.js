@@ -12,7 +12,7 @@ const getAllBlogs = async (req, res, next) => {
   }
 
   if (!blogs) {
-    return res.status(404).json({ message: " No blogs found" });
+    return res.status(400).json({ message: "No blogs found" });
   }
 
   return res.status(200).json({ blogs });
@@ -29,8 +29,9 @@ const addBlog = async (req, res, next) => {
   } catch (e) {
     return console.log(e);
   }
+
   if (!existingUser) {
-    return res.status(400).json({ message: " Unautorized" });
+    return res.status(400).json({ message: "Unautorized" });
   }
 
   const blog = new Blog({
@@ -110,7 +111,7 @@ const deleteBlog = async (req, res, next) => {
       return res.status(404).json({ message: "Blog not found" });
     }
 
-    // Remove the blog from the user's blogs array
+    // Remove blog from user's blogs array
     const user = blog.user;
     user.blogs.pull(blog);
     await user.save();
