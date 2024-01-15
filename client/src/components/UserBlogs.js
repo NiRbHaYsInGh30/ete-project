@@ -31,9 +31,10 @@ const UserBlogs = () => {
               id={blog._id}
               isUser={true}
               title={blog.title}
-              description={blog.desc}
+              description={blog.description}
+              content={blog.content}
               imageURL={blog.img}
-              userName={user.name}
+              userName={blog._id}
               date={new Date(blog.date).toLocaleDateString()}
             />
           </div>

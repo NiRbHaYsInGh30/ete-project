@@ -7,6 +7,7 @@ const AddBlogs = () => {
   const [inputs, setInputs] = useState({
     title: "",
     description: "",
+    content: "",
     imageURL: "",
   });
 
@@ -21,8 +22,9 @@ const AddBlogs = () => {
     const res = await axios
       .post("http://localhost:5000/api/blogs/add", {
         title: inputs.title,
-        desc: inputs.description,
+        description: inputs.description,
         img: inputs.imageURL,
+        content: inputs.content,
         user: localStorage.getItem("userId"),
       })
       .catch((err) => console.log(err));
@@ -33,14 +35,19 @@ const AddBlogs = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     sendRequest()
-      .then((data) => console.log(data))
+      .then((data) => {
+        console.log(data);
+        window.location.href = "/myBlogs";
+      })
       .then(() => navigate("/blogs"));
   };
   return (
-    <div className="mx-80 border rounded-md mt-3">
+    <div className="mx-80 rounded-md mt-3">
       <form onSubmit={handleSubmit}>
         <div className="rounded-md p-4 mt-3 flex flex-col justify-center items-center w-full">
-          <h3 className="text-3xl text-center font-semibold">Post Your Blog</h3>
+          <h3 className="text-3xl text-center font-semibold">
+            Write a new story
+          </h3>
           <div className="w-[60%]">
             <h3 className="text-xl font-semibold mt-2">Title</h3>
             <input
@@ -59,8 +66,19 @@ const AddBlogs = () => {
               className="border w-full rounded-md p-2 outline-none"
               name="description"
               onChange={handleChange}
-              rows={4}
+              rows={2}
               value={inputs.description}
+            />
+          </div>
+          <div className="w-[60%]">
+            <h3 className="text-xl font-semibold mt-2">Content</h3>
+            <textarea
+              placeholder="Content for blog post"
+              className="border w-full rounded-md p-2 outline-none"
+              name="content"
+              onChange={handleChange}
+              rows={4}
+              value={inputs.content}
             />
           </div>
           <div className="w-[60%]">

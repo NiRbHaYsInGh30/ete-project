@@ -1,10 +1,13 @@
-const express = require("express");
-const userRouter = require("./routes/user-routes");
-const blogRouter = require("./routes/blog-routes");
-require("./config/db");
-const cors = require("cors");
+import express from "express";
+import cors from "cors";
+import { startDB } from "./config/db.config.js";
+
+import userRouter from "./routes/user.routes.js";
+import blogRouter from "./routes/blog.routes.js";
 
 const app = express();
+
+startDB();
 
 app.use(cors());
 

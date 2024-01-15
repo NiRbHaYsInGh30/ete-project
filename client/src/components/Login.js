@@ -41,12 +41,16 @@ const Login = () => {
       console.log("signup");
       sendRequest("signup").then((data) => {
         localStorage.setItem("userId", data.user._id);
+        localStorage.setItem("userName", data.user.name);
+
         window.location.href = "/";
       });
     } else {
       console.log("login");
       sendRequest("login").then((data) => {
         localStorage.setItem("userId", data.user._id);
+        localStorage.setItem("userName", data.user.name);
+
         window.location.href = "/";
       });
     }

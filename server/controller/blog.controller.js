@@ -1,14 +1,15 @@
-const mongoose = require("mongoose");
-const { findByIdAndRemove } = require("../model/Blog");
-const Blog = require("../model/Blog");
-const User = require("../model/User");
+import mongoose from "mongoose";
 
-const getAllBlogs = async (req, res, next) => {
+import Blog from "../model/Blog.model.js";
+import User from "../model/User.model.js";
+
+const fetchAllBlogs = async (req, res) => {
   let blogs;
+
   try {
     blogs = await Blog.find();
   } catch (e) {
-    console.log(e);
+    console.error(e);
   }
 
   if (!blogs) {
@@ -18,8 +19,8 @@ const getAllBlogs = async (req, res, next) => {
   return res.status(200).json({ blogs });
 };
 
-const addBlog = async (req, res, next) => {
-  const { title, desc, img, user } = req.body;
+const addBlog = async (req, res) => {
+  const { title, description, img, content, user } = req.body;
 
   const currentDate = new Date();
 
@@ -27,7 +28,7 @@ const addBlog = async (req, res, next) => {
   try {
     existingUser = await User.findById(user);
   } catch (e) {
-    return console.log(e);
+    return console.error(e);
   }
 
   if (!existingUser) {
@@ -36,8 +37,9 @@ const addBlog = async (req, res, next) => {
 
   const blog = new Blog({
     title,
-    desc,
+    description,
     img,
+    content,
     user,
     date: currentDate,
   });
@@ -45,7 +47,7 @@ const addBlog = async (req, res, next) => {
   try {
     await blog.save();
   } catch (e) {
-    return console.log(e);
+    return console.error(e);
   }
 
   try {
@@ -62,19 +64,21 @@ const addBlog = async (req, res, next) => {
   return res.status(200).json({ blog });
 };
 
-const updateBlog = async (req, res, next) => {
+const updateBlog = async (req, res) => {
   const blogId = req.params.id;
-  const { title, desc } = req.body;
+  const { title, description, content, img } = req.body;
 
   let blog;
 
   try {
     blog = await Blog.findByIdAndUpdate(blogId, {
       title,
-      desc,
+      description,
+      content,
+      img,
     });
   } catch (e) {
-    return console.log(e);
+    return console.error(e);
   }
 
   if (!blog) {
@@ -84,14 +88,14 @@ const updateBlog = async (req, res, next) => {
   return res.status(200).json({ blog });
 };
 
-const getById = async (req, res, next) => {
+const getById = async (req, res) => {
   const id = req.params.id;
   let blog;
 
   try {
     blog = await Blog.findById(id);
   } catch (e) {
-    return console.log(e);
+    return console.error(e);
   }
 
   if (!blog) {
@@ -101,7 +105,7 @@ const getById = async (req, res, next) => {
   return res.status(200).json({ blog });
 };
 
-const deleteBlog = async (req, res, next) => {
+const deleteBlog = async (req, res) => {
   const id = req.params.id;
 
   try {
@@ -111,7 +115,6 @@ const deleteBlog = async (req, res, next) => {
       return res.status(404).json({ message: "Blog not found" });
     }
 
-    // Remove blog from user's blogs array
     const user = blog.user;
     user.blogs.pull(blog);
     await user.save();
@@ -123,7 +126,7 @@ const deleteBlog = async (req, res, next) => {
   }
 };
 
-const getByUserId = async (req, res, next) => {
+const getByUserId = async (req, res) => {
   const userId = req.params.id;
   let userBlogs;
   try {
@@ -137,11 +140,4 @@ const getByUserId = async (req, res, next) => {
   return res.status(200).json({ user: userBlogs });
 };
 
-module.exports = {
-  getAllBlogs,
-  addBlog,
-  updateBlog,
-  getById,
-  deleteBlog,
-  getByUserId,
-};
+export { fetchAllBlogs, addBlog, updateBlog, getById, deleteBlog, getByUserId };

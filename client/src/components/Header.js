@@ -23,17 +23,17 @@ const Header = () => {
               <div>
                 <ul className="flex gap-4">
                   <Link to={"/"}>
-                    <li className="text-md font-medium bg-gray-300 text-black p-2 rounded-md hover:bg-gray-400">
+                    <li className="text-md font-medium border text-black p-2 rounded-md hover:bg-gray-200">
                       All Blogs
                     </li>
                   </Link>
                   <Link to={"/myBlogs"}>
-                    <li className="text-md font-medium bg-gray-300 text-black p-2 rounded-md hover:bg-gray-400">
+                    <li className="text-md font-medium border text-black p-2 rounded-md hover:bg-gray-200">
                       My Blogs
                     </li>
                   </Link>
                   <Link to={"/blogs/add"}>
-                    <li className="text-md font-medium bg-gray-300 text-black p-2 rounded-md hover:bg-gray-400">
+                    <li className="text-md font-medium border text-black p-2 rounded-md hover:bg-gray-200">
                       Write a Blog
                     </li>
                   </Link>
@@ -46,7 +46,7 @@ const Header = () => {
               {!authorized ? (
                 <>
                   <Link to={"/login"}>
-                    <li className="text-md font-medium bg-gray-300 text-black p-2 rounded-md hover:bg-gray-400">
+                    <li className="text-md font-medium border text-black p-2 rounded-md hover:bg-gray-200">
                       Login/Signup
                     </li>
                   </Link>
@@ -55,7 +55,7 @@ const Header = () => {
                 <>
                   <li
                     onClick={logout}
-                    className="cursor-pointer text-md font-medium bg-gray-300 text-black p-2 rounded-md hover:bg-gray-400"
+                    className="cursor-pointer text-md font-medium border text-black p-2 rounded-md hover:bg-gray-200"
                   >
                     Logout
                   </li>

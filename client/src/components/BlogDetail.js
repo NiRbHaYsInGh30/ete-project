@@ -23,6 +23,8 @@ const BlogDetail = () => {
       setInputs({
         title: data.blog.title,
         description: data.blog.description,
+        content: data.blog.content,
+        img: data.blog.img,
       });
     } catch (error) {
       console.log(error);
@@ -38,6 +40,8 @@ const BlogDetail = () => {
       .put(`http://localhost:5000/api/blogs/update/${id}`, {
         title: inputs.title,
         description: inputs.description,
+        content: inputs.content,
+        img: inputs.img,
       })
       .catch((err) => console.log(err));
 
@@ -49,15 +53,16 @@ const BlogDetail = () => {
     e.preventDefault();
     sendRequest()
       .then((data) => console.log(data))
-      .then(() => navigate("/myBlogs/"));
+      .then(() => navigate("/myBlogs"));
   };
 
   return (
     <div>
       {inputs && (
         <form onSubmit={handleSubmit} className="flex justify-center mt-2">
-          <div className="rounded-md border p-4 w-[60%] flex flex-col items-center justify-center">
+          <div className="rounded-md p-4 w-[60%] flex flex-col items-center justify-center">
             <h2 className="text-3xl font-semibold">Edit blog</h2>
+            <h4 className="text-md font-medium">Blog ID: [ {id} ]</h4>
             <div className="w-full">
               <h3 className="font-medium text-xl">Title</h3>
               <input
@@ -75,8 +80,28 @@ const BlogDetail = () => {
                 onChange={handleChange}
                 value={inputs.description}
                 className="border rounded-md p-2 w-full outline-none"
-                rows={4}
+                rows={2}
               ></textarea>
+            </div>
+            <div className="w-full">
+              <h3 className="font-medium text-xl">Content</h3>
+              <textarea
+                name="content"
+                onChange={handleChange}
+                value={inputs.content}
+                className="border rounded-md p-2 w-full outline-none"
+                rows={2}
+              ></textarea>
+            </div>
+            <div className="w-full">
+              <h3 className="font-medium text-xl">img</h3>
+              <input
+                type="text"
+                name="description"
+                onChange={handleChange}
+                value={inputs.img}
+                className="border rounded-md p-2 w-full outline-none"
+              ></input>
             </div>
 
             <button
