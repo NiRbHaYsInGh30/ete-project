@@ -80,7 +80,7 @@ const BlogDetail = () => {
                 onChange={handleChange}
                 value={inputs.description}
                 className="border rounded-md p-2 w-full outline-none"
-                rows={2}
+                rows={4}
               ></textarea>
             </div>
             <div className="w-full">
@@ -90,7 +90,7 @@ const BlogDetail = () => {
                 onChange={handleChange}
                 value={inputs.content}
                 className="border rounded-md p-2 w-full outline-none"
-                rows={2}
+                rows={6}
               ></textarea>
             </div>
             <div className="w-full">

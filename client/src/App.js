@@ -18,7 +18,7 @@ function App() {
         <Routes>
           <Route index element={<Blogs />} />
           <Route path="/login" element={<Login />}></Route>
-          <Route path="/myBlogs" element={<UserBlogs />}></Route>
+          <Route path="/myBlogs" element={<UserBlogs visiting={true} />}></Route>
           <Route path="/myBlogs/:id" element={<BlogDetail />}></Route>
           <Route path="/blogs/add" element={<AddBlogs />} />
         </Routes>

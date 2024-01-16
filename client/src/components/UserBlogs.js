@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Blog from "./Blog";
 
-const UserBlogs = () => {
+const UserBlogs = (visiting) => {
   const [user, setUser] = useState();
+
   const id = localStorage.getItem("userId");
 
   useEffect(() => {
@@ -23,22 +24,25 @@ const UserBlogs = () => {
   }, [id]);
 
   return (
-    <div className="container">
-      {user &&
-        user.blogs.map((blog, index) => (
-          <div key={index}>
+    <div className="mx-auto p-8">
+      {user && (
+        <div className="grid grid-cols-4 gap-8">
+          {user.blogs.map((blog, index) => (
             <Blog
+              key={index}
               id={blog._id}
               isUser={true}
               title={blog.title}
               description={blog.description}
               content={blog.content}
               imageURL={blog.img}
-              userName={blog._id}
+              userName={blog.user}
               date={new Date(blog.date).toLocaleDateString()}
+              visiting={visiting}
             />
-          </div>
-        ))}
+          ))}
+        </div>
+      )}
     </div>
   );
 };
